@@ -1,5 +1,16 @@
 #!/usr/bin/bash
 
+# ---------------------------
+# Check for sudo privileges
+# ---------------------------
+
+echo "========== Checking for sudo privileges =========="
+sudo -v || { echo "[ERROR] This script requires sudo privileges. Exiting."; exit 1; }
+
+# ---------------------------
+# NVIDIA Drivers Check / Install
+# ---------------------------
+
 echo "========== Checking NVIDIA Drivers =========="
 
 if dpkg -l | grep -qw nvidia-driver; then
@@ -229,6 +240,26 @@ fi
 # Set default to 22
 nvm alias default 22
 nvm use default
+
+echo "[INFO] NVM with Node.js 22 set up."
+
+# ---------------------------
+# Rust Installation
+# ---------------------------
+
+echo "========== Checking Rust Installation =========="
+
+if command -v rustup >/dev/null 2>&1; then
+    echo "[INFO] Rust is already installed. Skipping."
+else
+    echo "[INFO] Installing Rust via rustup..."
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+
+    # Source cargo immediately (for current script run)
+    . "$HOME/.cargo/env"
+fi
+
+echo "[INFO] Rust and Cargo are ready to use."
 
 # ---------------------------
 # GNOME Settings Configuration
