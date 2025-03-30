@@ -1,28 +1,28 @@
 #!/usr/bin/bash
 
-echo "========== Setup Script Starting =========="
+echo "========== Checking NVIDIA Drivers =========="
 
-# Ask user if they want to install NVIDIA drivers
-read -p "Do you want to install NVIDIA drivers? [y/N]: " install_nvidia
+if dpkg -l | grep -qw nvidia-driver; then
+    echo "[INFO] NVIDIA driver is already installed. Skipping."
+else
+    read -p "Do you want to install NVIDIA drivers? [y/N]: " install_nvidia
 
-if [[ "$install_nvidia" =~ ^[Yy]$ ]]; then
-    echo "[INFO] NVIDIA driver installation selected."
+    if [[ "$install_nvidia" =~ ^[Yy]$ ]]; then
+        echo "[INFO] NVIDIA driver installation selected."
 
-    REPO_LINE="deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware"
-    if ! grep -Fxq "$REPO_LINE" /etc/apt/sources.list; then
-        echo "[INFO] Adding required NVIDIA repository to /etc/apt/sources.list"
-        echo "$REPO_LINE" | sudo tee -a /etc/apt/sources.list
-    else
-        echo "[INFO] Required NVIDIA repository is already configured."
-    fi
+        REPO_LINE="deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware"
+        if ! grep -Fxq "$REPO_LINE" /etc/apt/sources.list; then
+            echo "[INFO] Adding required NVIDIA repository to /etc/apt/sources.list"
+            echo "$REPO_LINE" | sudo tee -a /etc/apt/sources.list
+        else
+            echo "[INFO] Required NVIDIA repository is already configured."
+        fi
 
-    if dpkg -l | grep -qw nvidia-driver; then
-        echo "[INFO] NVIDIA driver is already installed, skipping installation."
-    else
-        echo "[INFO] NVIDIA driver not found, installing..."
+        echo "[INFO] Installing NVIDIA driver..."
         sudo apt update
         sudo apt install -y nvidia-driver firmware-misc-nonfree
         echo "[INFO] NVIDIA driver installation complete. A reboot is recommended."
+
         read -p "Do you want to reboot now? [y/N]: " answer
         if [[ "$answer" =~ ^[Yy]$ ]]; then
             echo "[INFO] Rebooting system..."
@@ -30,9 +30,9 @@ if [[ "$install_nvidia" =~ ^[Yy]$ ]]; then
         else
             echo "[INFO] You can reboot later when convenient."
         fi
+    else
+        echo "[INFO] Skipping NVIDIA driver setup."
     fi
-else
-    echo "[INFO] Skipping NVIDIA driver setup."
 fi
 
 # ---------------------------
