@@ -200,6 +200,37 @@ else
 fi
 
 # ---------------------------
+# NVM + Node.js Installation
+# ---------------------------
+
+echo "========== Setting up NVM and Node.js =========="
+
+NVM_DIR="$HOME/.nvm"
+
+if [ -d "$NVM_DIR" ]; then
+    echo "[INFO] NVM is already installed. Skipping NVM installation."
+else
+    echo "[INFO] Installing NVM..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+fi
+
+# Load NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Install Node.js 22 if not already installed
+if nvm ls 22 &>/dev/null; then
+    echo "[INFO] Node.js 22 is already installed via NVM."
+else
+    echo "[INFO] Installing Node.js 22 via NVM..."
+    nvm install 22
+fi
+
+# Set default to 22
+nvm alias default 22
+nvm use default
+
+# ---------------------------
 # GNOME Settings Configuration
 # ---------------------------
 
