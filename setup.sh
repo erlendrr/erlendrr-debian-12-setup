@@ -167,16 +167,25 @@ echo "[INFO] Git configured."
 
 echo "========== Configuring GPG Agent =========="
 
+GPG_CONF="$HOME/.gnupg/gpg-agent.conf"
 mkdir -p ~/.gnupg
 
-echo "default-cache-ttl 1800" >> ~/.gnupg/gpg-agent.conf
-echo "enable-ssh-support" >> ~/.gnupg/gpg-agent.conf
+# Ensure config file exists
+touch "$GPG_CONF"
 
+# Add or update lines safely
+grep -q '^default-cache-ttl' "$GPG_CONF" && \
+    sed -i 's/^default-cache-ttl.*/default-cache-ttl 1800/' "$GPG_CONF" || \
+    echo "default-cache-ttl 1800" >> "$GPG_CONF"
+
+grep -q '^enable-ssh-support' "$GPG_CONF" || \
+    echo "enable-ssh-support" >> "$GPG_CONF"
+
+# Restart GPG agent
 gpgconf --kill gpg-agent
 gpgconf --launch gpg-agent
 
 echo "[INFO] GPG agent configured."
-
 # ---------------------------
 # Session Environment Variables
 # ---------------------------
