@@ -182,7 +182,7 @@ echo "[INFO] Rust and Cargo are ready to use."
 # ---------------------------
 
 echo "========== Creating symlinks for dotfiles with GNU Stow =========="
-./dotfiles/stow-home.sh && echo "ok"
+stow -t $HOME ./dotfiles && echo "ok"
 
 echo "========== Basic Setup Complete =========="
 
