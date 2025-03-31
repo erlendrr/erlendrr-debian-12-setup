@@ -1,0 +1,10 @@
+[user]
+	name = Erlend Ryan
+	email = erlendryan@pm.me
+	signingkey = 2CA5A9819AFAE9D402B873EE78D13AC5CE2D8917
+[commit]
+	gpgsign = true
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main

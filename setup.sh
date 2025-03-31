@@ -64,7 +64,8 @@ sudo apt install -y \
     ripgrep \
     git \
     yubikey-manager \
-    yubioath-desktop
+    yubioath-desktop \
+    stow
 
 echo "[INFO] Base packages installed."
 
@@ -154,50 +155,6 @@ else
 fi
 
 # ---------------------------
-# Git Configuration
-# ---------------------------
-
-echo "========== Configuring Git =========="
-
-git config --global user.name "Erlend Ryan"
-git config --global user.email "erlendryan@pm.me"
-
-# GPG signing
-git config --global user.signingkey 2CA5A9819AFAE9D402B873EE78D13AC5CE2D8917
-git config --global commit.gpgsign true
-
-# Additional Git settings
-git config --global pull.rebase false
-git config --global init.defaultBranch main
-
-echo "[INFO] Git configured."
-
-# ---------------------------
-# GPG Agent Setup (for SSH + Git signing)
-# ---------------------------
-
-echo "========== Configuring GPG Agent =========="
-
-GPG_CONF="$HOME/.gnupg/gpg-agent.conf"
-mkdir -p ~/.gnupg
-
-# Ensure config file exists
-touch "$GPG_CONF"
-
-# Add or update lines safely
-grep -q '^default-cache-ttl' "$GPG_CONF" && \
-    sed -i 's/^default-cache-ttl.*/default-cache-ttl 1800/' "$GPG_CONF" || \
-    echo "default-cache-ttl 1800" >> "$GPG_CONF"
-
-grep -q '^enable-ssh-support' "$GPG_CONF" || \
-    echo "enable-ssh-support" >> "$GPG_CONF"
-
-# Restart GPG agent
-gpgconf --kill gpg-agent
-gpgconf --launch gpg-agent
-
-echo "[INFO] GPG agent configured."
-# ---------------------------
 # Session Environment Variables
 # ---------------------------
 
@@ -262,6 +219,14 @@ fi
 echo "[INFO] Rust and Cargo are ready to use."
 
 # ---------------------------
+# Install Kanata From Source
+# ---------------------------
+
+echo "========== Installing Kanata =========="
+
+cargo install kanata
+
+# ---------------------------
 # GNOME Settings Configuration
 # ---------------------------
 
@@ -296,5 +261,11 @@ gsettings set org.gnome.desktop.background primary-color '#241f31' && echo "ok"
 gsettings set org.gnome.desktop.screensaver picture-uri 'file:///usr/share/backgrounds/gnome/blobs-l.svg' && echo "ok"
 gsettings set org.gnome.desktop.screensaver primary-color '#241f31' && echo "ok"
 
-echo "========== Setup Complete =========="
+# ---------------------------
+# Set up dotfiles with GNU Stow 
+# ---------------------------
 
+echo "========== Creating symlinks for dotfiles with GNU Stow =========="
+./dotfiles/stow-home.sh && echo "ok"
+
+echo "========== Setup Complete =========="
