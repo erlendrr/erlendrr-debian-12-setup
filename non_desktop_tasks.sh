@@ -178,6 +178,19 @@ fi
 echo "[INFO] Rust and Cargo are ready to use."
 
 # ---------------------------
+# Install OpenSSL Libraries (used for some rust CLI tools)
+# ---------------------------
+
+sudo apt-get install pkg-config libssl-dev
+
+# ---------------------------
+# Install rust tools
+# ---------------------------
+
+# Custom script made by Erlend Ryan to set up DNS pointer to IP on machine
+cargo install domeneshop-ip
+
+# ---------------------------
 # Set up dotfiles with GNU Stow 
 # ---------------------------
 
