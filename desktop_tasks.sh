@@ -46,7 +46,8 @@ echo "========== Installing Other APT-based Desktop Tools =========="
 
 sudo apt update
 sudo apt install -y \
-    yubioath-desktop
+    yubioath-desktop \
+    autokey-gtk
 
 echo "[INFO] Desktop tools installed."
 
@@ -84,16 +85,6 @@ gsettings set org.gnome.desktop.background primary-color '#241f31' && echo "ok"
 
 gsettings set org.gnome.desktop.screensaver picture-uri 'file:///usr/share/backgrounds/gnome/blobs-l.svg' && echo "ok"
 gsettings set org.gnome.desktop.screensaver primary-color '#241f31' && echo "ok"
-
-# ---------------------------
-# Setting LeftCtrl + LeftAlt as AltGr (Level 3 Shift)
-# ---------------------------
-
-echo "========== Configuring LeftCtrl + LeftAlt to work as AltGr with autokey  =========="
-
-sudo apt install autokey-gtk
-
-echo "[INFO] LeftCtrl + LeftAlt now set as AltGr. Keyboard configuration complete."
 
 echo "========== Desktop Setup Complete =========="
 
