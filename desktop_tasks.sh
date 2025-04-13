@@ -1,6 +1,14 @@
 #!/usr/bin/bash
 
 echo "========== Running tasks that require a desktop =========="
+
+# ---------------------------
+# Check for sudo privileges
+# ---------------------------
+
+echo "========== Checking for sudo privileges =========="
+sudo -v || { echo "[ERROR] This script requires sudo privileges. Exiting."; exit 1; }
+
 # ---------------------------
 # Visual Studio Code Installation
 # ---------------------------
