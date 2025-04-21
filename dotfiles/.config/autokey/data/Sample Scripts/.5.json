@@ -19,8 +19,7 @@
     },
     "hotkey": {
         "modifiers": [
-            "<alt>",
-            "<ctrl>"
+            "<alt>"
         ],
         "hotKey": "9"
     },

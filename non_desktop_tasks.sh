@@ -160,6 +160,14 @@ nvm use default
 echo "[INFO] NVM with Node.js 22 set up."
 
 # ---------------------------
+# Install bun 
+# ---------------------------
+
+# Install dependencies
+sudo apt install unzip -y
+curl -fsSL https://bun.sh/install | bash
+
+# ---------------------------
 # Rust Installation
 # ---------------------------
 
