@@ -52,6 +52,12 @@ sudo apt install -y \
 echo "[INFO] Desktop tools installed."
 
 # ---------------------------
+# Set keyboard repeat rate and delay
+# ---------------------------
+
+xset r rate 220 40
+
+# ---------------------------
 # GNOME Settings Configuration
 # ---------------------------
 
