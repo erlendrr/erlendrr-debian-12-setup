@@ -1,3 +1,8 @@
+# Auto-start tmux only for local interactive shells
+if [[ -z "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]] && command -v tmux >/dev/null 2>&1; then
+  tmux attach-session -t auto || tmux new-session -s auto
+fi
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
