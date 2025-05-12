@@ -113,3 +113,5 @@ export PATH="$HOME/scripts:$PATH"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+xset r rate 500 30

@@ -66,7 +66,8 @@ sudo apt install -y \
     ripgrep \
     git \
     yubikey-manager \
-    stow
+    stow \
+    xclip
 
 echo "[INFO] Base packages installed."
 
@@ -197,6 +198,18 @@ sudo apt-get install pkg-config libssl-dev
 
 # Custom script made by Erlend Ryan to set up DNS pointer to IP on machine
 cargo install domeneshop-ip
+
+# ---------------------------
+# Install postgresql
+# ---------------------------
+
+sudo apt install curl ca-certificates
+sudo install -d /usr/share/postgresql-common/pgdg
+sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+. /etc/os-release
+sudo sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
+sudo apt update
+sudo apt -y install postgresql
 
 # ---------------------------
 # Set up dotfiles with GNU Stow 
